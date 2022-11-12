@@ -10,7 +10,7 @@
   "author": "Ricardo Almeida",
   "license": "MIT",
   "dependencies": {
-    "@babel/eslint-parser": "^7.19.1",
+    "csv-split-stream": "^1.0.2",
     "dotenv": "^16.0.3",
     "node-fetch": "^2.6.7"
   }

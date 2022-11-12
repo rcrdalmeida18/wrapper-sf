@@ -1,3 +1,5 @@
+'use strict'
+
 require('dotenv').config();
 const endpoints = require('./constants/endpoints');
 const request = require('./utils/request');
@@ -8,6 +10,7 @@ const request = require('./utils/request');
  * @returns {Object} - Object with the instance and token information.
  */
 const login = async () => {
+    console.log('Executing login...')
     const body = {
         grant_type: 'password',
         client_id: process.env.SF_CLIENT_ID,
@@ -23,7 +26,7 @@ const login = async () => {
     const url = process.env.SF_URL + endpoints.login;
 
     const response = await request.request(url, headers, 'POST', new URLSearchParams(body))
-    console.log(response)
+
     return response;
 }
 
@@ -38,11 +41,57 @@ const login = async () => {
  *  
  */
 const createJob = async(options) => {
+    console.log('Executing createJob...')
     const response = await request.request(options.url, options.headers, 'POST', JSON.stringify(options.body));
     return response;
 }
 
+/**
+ * Upload data to job via Bulk API 2.0.
+ *
+ * @param {Object} options
+ * @property {String} options.url - Its the instance url and the content url from the job response.
+ * @property {Object} options.headers - Has the bearer token and the content type
+ * @property {Object} options.body - Stream of the chunk of the csv file
+ * @returns {Object} - Object with job information. More details at https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/create_job.htm
+ *  
+ */
+const uploadJobData = async(options) => {
+    console.log('Executing uploadJobData...')
+    return await request.request(options.url, options.headers, 'PUT', options.body, true);
+}
+
+/**
+ * Upload data to job via Bulk API 2.0.
+ *
+ * @param {Object} options
+ * @property {String} options.url - Its the instance url and the endpoint to create the job concatenated without the batches.
+ * @property {Object} options.headers - Has the bearer token and the content type
+ * @property {Object} options.body - State with UploadComplete
+ * @returns {Object} - Object with job information. More details at https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/create_job.htm
+ */
+const closeJob = async (options) => {
+    console.log('Executing closeJob...')
+    return await request.request(options.url, options.headers, 'PATCH', JSON.stringify(options.body));
+}
+
+/**
+ * Upload data to job via Bulk API 2.0.
+ *
+ * @param {Object} options
+ * @property {String} options.url - Its the instance url and the endpoint to create the job concatenated without the batches.
+ * @property {Object} options.headers - Has the bearer token and the content type
+ * @returns {Object} - Object with job information. More details at https://developer.salesforce.com/docs/atlas.en-us.api_asynch.meta/api_asynch/create_job.htm
+ */
+const getJobInfo = async (options) => {
+    console.log('Executing getJobInfo...')
+    return await request.request(options.url, options.headers, 'GET', null);
+}
+
 module.exports = {
     login,
-    createJob
+    createJob,
+    uploadJobData,
+    closeJob,
+    getJobInfo
 }
