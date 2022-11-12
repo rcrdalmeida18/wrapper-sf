@@ -9,14 +9,11 @@ const request = async (url, headers, method, data, noresponse) => {
             }
         );
 
-     
-        console.log('fetch data :: ' , url, method, headers)
-        const response = await request.json();
-
         if (noresponse) {
-            console.log('noresponse :: ' , response )
+            return;
         }
-        
+
+        const response = await request.json();
 
         return {
             status: request.status,
