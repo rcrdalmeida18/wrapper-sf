@@ -10,6 +10,7 @@ const request = require('./utils/request');
  * @returns {Object} - Object with the instance and token information.
  */
 const login = async () => {
+    console.log('Executing login...')
     const body = {
         grant_type: 'password',
         client_id: process.env.SF_CLIENT_ID,
@@ -25,7 +26,7 @@ const login = async () => {
     const url = process.env.SF_URL + endpoints.login;
 
     const response = await request.request(url, headers, 'POST', new URLSearchParams(body))
-    console.log(response)
+
     return response;
 }
 
@@ -40,6 +41,7 @@ const login = async () => {
  *  
  */
 const createJob = async(options) => {
+    console.log('Executing createJob...')
     const response = await request.request(options.url, options.headers, 'POST', JSON.stringify(options.body));
     return response;
 }
