@@ -1,5 +1,5 @@
 const fetch = require('node-fetch')
-const request = async (url, headers, method, data) => {
+const request = async (url, headers, method, data, noresponse) => {
     try {
         const request = await fetch(
             url, {
@@ -9,7 +9,14 @@ const request = async (url, headers, method, data) => {
             }
         );
 
+     
+        console.log('fetch data :: ' , url, method, headers)
         const response = await request.json();
+
+        if (noresponse) {
+            console.log('noresponse :: ' , response )
+        }
+        
 
         return {
             status: request.status,
