@@ -88,10 +88,17 @@ const getJobInfo = async (options) => {
     return await request.request(options.url, options.headers, 'GET', null);
 }
 
+const getErroredRecords = async (options) => {
+    console.log('Executing getErroredRecords...')
+    return await request.request(options.url, options.headers, 'GET', null);
+}
+
 module.exports = {
     login,
     createJob,
     uploadJobData,
     closeJob,
-    getJobInfo
+    getJobInfo,
+    getErroredRecords,
+    endpoints
 }
