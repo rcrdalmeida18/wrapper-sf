@@ -89,7 +89,7 @@ const getJobInfo = async (options) => {
 }
 
 const getErroredRecords = async (options) => {
-    console.log('Executing getJobInfo...')
+    console.log('Executing getErroredRecords...')
     return await request.request(options.url, options.headers, 'GET', null);
 }
 
